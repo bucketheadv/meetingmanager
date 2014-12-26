@@ -8,6 +8,7 @@ import com.thoughtworks.meeting.io.ConfigReader;
 import com.thoughtworks.meeting.io.EventReader;
 import com.thoughtworks.meeting.parser.ParserFactory;
 import com.thoughtworks.meeting.parser.StringProxy;
+import com.thoughtworks.meeting.utils.TimeUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,15 +28,20 @@ public class EventBuilder {
             list.add(event);
         }
         List<List<EventResult>> tracks = new ArrayList<List<EventResult>>();
-        while(list.size() > 0){
-            List<EventResult> track = new EventGeneratorImpl(list).getTrack();
-            tracks.add(track);
+        //while(list.size() > 0){
+        EventGeneratorImpl generator = new EventGeneratorImpl(list);
+        List<EventResult> track = generator.getTrack();
+        tracks.add(track);
+        while (generator.getEventHasNotProcessed().size() > 0){
+            generator = new EventGeneratorImpl(generator.getEventHasNotProcessed());
+            tracks.add(generator.getTrack());
         }
+        //}
         for(int i = 0; i < tracks.size();i++){
             System.out.println("Track " + (i + 1) + ":");
             for(int j = 0;j < tracks.get(i).size();j++){
                 EventResult er = tracks.get(i).get(j);
-                System.out.println(er.getStartTime() + " " + er.getName() + " " + er.getIntervalString());
+                System.out.println(TimeUtils.getHourAndMin(er.getStartTime()) + " " + er.getName() + " " + er.getIntervalString());
             }
         }
     }

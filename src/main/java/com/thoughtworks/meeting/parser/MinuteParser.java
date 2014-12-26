@@ -10,8 +10,8 @@ import java.util.regex.Pattern;
  */
 public class MinuteParser extends TimeParser {
     public Parser parse(String info) throws StringParserException{
-        Pattern patten = Pattern.compile("^([A-Za-z0-9_-]\\s*)*\\s.*[1-9]{1,2}[a-z]{3}$");
-        Pattern timePatten = Pattern.compile("[1-9]{1,2}[a-z]{3}");
+        Pattern patten = Pattern.compile("^([A-Za-z0-9_-]\\s*)*\\s.*[0-9]{1,2}[a-z]{3}$");
+        Pattern timePatten = Pattern.compile("[0-9]{1,2}[a-z]{3}");
         Matcher matcher = patten.matcher(info);
         Matcher timeMatcher = timePatten.matcher(info);
         String time = "";

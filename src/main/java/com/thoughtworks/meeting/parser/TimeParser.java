@@ -14,7 +14,7 @@ public abstract class TimeParser implements Parser {
     }
 
    public Event getEvent(){
-       return new Event(this.eventName,this.interval);
+       return new Event(this.eventName,this.interval,this.intervalString);
    }
     public String getIntervalString(){
         return this.intervalString;

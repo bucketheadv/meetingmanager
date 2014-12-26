@@ -18,7 +18,7 @@ public class StringProxy{
         return this.parser.getEvent();
     }
     public static void main(String args[]){
-        StringProxy sp = new StringProxy(ParserFactory.getInstance().create("32132 3213  32bvx 2dda"),"32132 3213  32bvx 2dda");
+        StringProxy sp = new StringProxy(ParserFactory.getInstance().create("Lua for the Masses 30min"),"Lua for the Masses 30min");
         System.out.println(sp.getEvent().getName());
         System.out.println(sp.getEvent().getInterval());
     }
