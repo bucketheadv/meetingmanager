@@ -23,7 +23,7 @@
 包中),由于它的功能相对简单，只需要将数据读取到内存中即可，为了避免不必要的内存开销，我们考虑设置一个静态方法或者设置一个
 单例来读取配置和事件的数据，事件的数据我们只需要在程序开始的时候读取一次即可，因此直接设置一个静态方法来读取即可。而配置
 中的数据我们需要在多个地方来引用它，因此我们考虑使用单例模式，为了防止多次实例化该读取类，需要引入锁的机制，但我们并不会
-修改输入的数据文件和配置文件本身，因此不需要给读取类加锁。
+修改输入的数据文件和配置文件本身，因此不需要给读取类加锁。读取配置文件在ConfigReader类初始化时进行。
 
     public synchronized static ConfigReader getInstance(){
         if (instance == null){
@@ -32,4 +32,37 @@
         return instance;
     }
 
+>提供外部程序获取配置参数的值的接口
+
+    public String get(String key) {
+        return configs.get(key);
+    }
+    ...
+
+
 *event设计*
+>从input的数据中来看，我们需要两个属性值，一个是事件的名称，一个是事件的持续时间。因此我们可以很容易的设计出event的存储
+结构。但是输入和输出的事件中，所包含的信息并不是完全相同的，因为在输出的信息中还包含了事件的开始时间，因此我们可以设计两
+个结构，一个是输入类，一个是输出类，输出结构继承自输入类。从给定的条件中来看，一个track包含了4种事件，分别是上午、午餐、下午和
+网络事件（把它当作晚上事件），因此我们可以考虑将它们分别构造，但是必须保证它们的先后顺序，将生成的事件放在一个有序表中来
+存储，然后外部程序来访问这个有序表即可。此时，我们可以选择使用建造者模式来构造一个track，并设计出它的接口:
+
+    public interface EventGenerator {
+        public void generateMorningEvent();
+        public void generateLunchEvent();
+        public void generateAfternoonEvent();
+        public void generateEveningEvent();
+        public List<EventResult> getTrack();
+    }
+
+然后在实现类EventGeneratorImpl中:
+
+    public List<EventResult> getTrack(){
+        this.generateMorningEvent();
+        this.generateLunchEvent();
+        this.generateAfternoonEvent();
+        this.generateEveningEvent();
+        return this.track;
+    }
+
+逻辑部分交给各种事件的生成方法中来处理就好了。
