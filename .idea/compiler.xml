@@ -22,9 +22,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="meeting" />
+        <module name="App" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="App" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
 
