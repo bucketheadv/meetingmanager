@@ -24,6 +24,7 @@
 单例来读取配置和事件的数据，事件的数据我们只需要在程序开始的时候读取一次即可，因此直接设置一个静态方法来读取即可。而配置
 中的数据我们需要在多个地方来引用它，因此我们考虑使用单例模式，为了防止多次实例化该读取类，需要引入锁的机制，但我们并不会
 修改输入的数据文件和配置文件本身，因此不需要给读取类加锁。
+
     public synchronized static ConfigReader getInstance(){
         if (instance == null){
             instance = new ConfigReader();
