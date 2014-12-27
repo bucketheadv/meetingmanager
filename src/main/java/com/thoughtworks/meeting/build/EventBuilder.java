@@ -24,7 +24,7 @@ public class EventBuilder {
         List<Event> list = new ArrayList<Event>();
         for (int i = 0;i < eventList.size();i++){
             StringProxy sp = new StringProxy(ParserFactory.getInstance().create(eventList.get(i)),eventList.get(i));
-            Event event = new Event(sp.getEvent().getName(),sp.getEvent().getInterval(),sp.getEvent().getIntervalString());
+            Event event = sp.getEvent(); //new Event(sp.getEvent().getName(),sp.getEvent().getInterval(),sp.getEvent().getIntervalString());
             list.add(event);
         }
         List<List<EventResult>> tracks = new ArrayList<List<EventResult>>();

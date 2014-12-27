@@ -38,6 +38,9 @@ public class EventGeneratorImpl implements EventGenerator {
                 nextStartTime = startTime;
                 this.track = new ArrayList<EventResult>();
             }
+            if(BuildHelper.allIntervalTime(tempList) < (timeUntil - nextStartTime)){ //to avoid the dead loop
+                break;
+            }
             int random = RandomUtils.random(tempList.size());
             Event event = tempList.get(random);
             Controller controller = new NetworkEventController(event,nextStartTime);

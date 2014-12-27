@@ -15,4 +15,11 @@ public class BuildHelper {
         }
         return false;
     }
+    public static long allIntervalTime(List<Event> eventList){
+        long ret = 0;
+        for (Event event : eventList){
+            ret = ret + event.getInterval();
+        }
+        return ret;
+    }
 }
