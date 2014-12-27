@@ -17,6 +17,7 @@ public class MinuteParser extends TimeParser {
         String time = "";
         if (!matcher.matches())
             throw new StringParserException("The string input of '" + info + "' is invalid!");
+
         while (timeMatcher.find())
             time = timeMatcher.group();
 

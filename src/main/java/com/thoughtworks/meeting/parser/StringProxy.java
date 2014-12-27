@@ -11,7 +11,7 @@ public class StringProxy{
         try {
             this.parser = parser.parse(info);
         }catch (Exception e){
-            e.printStackTrace();
+            System.out.println("Parse Error :" + e.getMessage() );
         }
     }
     public Event getEvent(){

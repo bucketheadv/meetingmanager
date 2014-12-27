@@ -2,6 +2,7 @@ package com.thoughtworks.meeting;
 
 import com.thoughtworks.meeting.parser.LightningParser;
 import com.thoughtworks.meeting.parser.MinuteParser;
+import com.thoughtworks.meeting.parser.StringParserException;
 import com.thoughtworks.meeting.parser.StringProxy;
 import com.thoughtworks.meeting.event.Event;
 import junit.framework.TestCase;
@@ -15,5 +16,13 @@ public class TestStringProxy extends TestCase {
         assertNotNull(sp.getEvent().getName());
         StringProxy sp2 = new StringProxy(new LightningParser(),"ads lightning");
         assertNotNull(sp2.getEvent().getName());
+        StringProxy sp3;
+        try{
+            sp3 = new StringProxy(new MinuteParser(),"ads dfsa");
+            assertNotNull(sp3.getEvent());
+        }catch (Exception e){
+            assertTrue(e instanceof NullPointerException);
+            //assertTrue(e.getMessage().contains("invalid"));
+        }
     }
 }
