@@ -55,7 +55,7 @@
         public List<EventResult> getTrack();
     }
 
-然后在实现类EventGeneratorImpl中:
+>然后在实现类EventGeneratorImpl中:
 
     public List<EventResult> getTrack(){
         this.generateMorningEvent();
@@ -65,4 +65,32 @@
         return this.track;
     }
 
-逻辑部分交给各种事件的生成方法中来处理就好了。
+>逻辑部分交给各种事件的生成方法中来处理就好了。但此时还是不够，因为它要求网络事件必须要在16~17点之间开始，因此我们还需要
+>对事件是否符合时间和事件类型作相应的处理，但是网络事件并不是由输入文本读入的，因此只需要对EveningEvent作时间处理就好了，
+>但是这样的设计无法适应外部需求的变更，因此我们考虑设计一个事件处理器链来处理特殊情况，此处我们引入职责链模式，我们给每
+>一个EventGenerator都设置一个事件控制器链，当有特殊要求生成时，我们只需要编写一个新的事件控制器并把它加入相应的控制器链
+>中即可。
+
+    public abstract class Controller{
+        protected Controller successor; //下一个处理控制器
+        protected Event event;
+        protected long startTime;
+        ... //省略构造方法
+        public void setSuccessor(Controller controller){
+            this.successor = controller;
+        }
+        public abstract boolean process();//处理事件
+    }
+
+> 每有一个新需求，我们只需要新编写一个控制器类继承自Controller并实现proccess方法即可:
+
+    public boolean proccess() {
+        ...//这里是事件处理逻辑
+        if (this.successor != null)
+            //如果有下一个控制器，则交给下一个控制器处理
+            return this.successor.process();
+        else
+            return true;
+    }
+
+> 这样一来，即使外部条件变更，我们也可以很容易的添加处理代码了。
