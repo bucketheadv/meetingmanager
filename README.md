@@ -94,3 +94,48 @@
     }
 
 > 这样一来，即使外部条件变更，我们也可以很容易的添加处理代码了。
+
+
+*parser设计*
+>除了输入程序和构造程序，我们还需要对输入的数据进行解析，分离出我们想要的数据，在此实例中，只有两种数据，以分钟结尾和以
+**lightning**结尾的(当然以后可能会更多)，我们需要分别对其进行处理，按照单一职责的原则，我们可以设计一个接口，然后分别编写一
+个类并实现这个接口后来解析它们，即一个类只处理一种数据，因此我们分别编写**MinuteParser**和**Lightning**两个类分别处理分
+钟结尾和**lightning**结尾的数据，这两个类实现了**Parser**接口，**Parser**接口定义如下:
+
+    public interface Parser{
+        public Parser parse(String info);
+        ...
+    }
+
+> **parse**方法解析参数数据并返回当前对象。但是此时数据本身无法知道它要被哪个解析类调用，我们要让程序本身自己来识别它要
+> 被哪个解析类所解析，于是我们引入**工厂模式**，代码设计如下:
+
+    public Parser create(string info){
+        if (info.endsWith("min")){
+            return new MinuteParser();
+        }else if(info.endsWith("lightning")){
+            return new LightningParser();
+        }
+        return null;
+    }
+
+> 即使如此，我们可能还是经常和实现类(LightningParser和MinuteParser)打交道，我们可以提供一个通用的接口来访问这些对象，不
+> 需要一个一个来辨识它，此时引用**代理模式**，让代理类为我们提供所有需要的接口，而不在一一对对象本身进行操作，设计的代理
+> 类如下:
+
+    public class StringProxy{
+        private Parser parser;
+        public StringProxy(Parser parser,String info){
+            this.parser = parser.parse(info);//将解析后返回的对象传递给代理，然后我们就能直接读取它的属性了
+        }
+        public Event getEvent(){
+            return this.parser.getEvent();
+        }
+    }
+
+> 封装了一些对类的操作后，直接向代理访问数据即可，简化了很多不必要的操作。
+
+*其他*
+> 我们需要对时间进行很多的操作，但如果直接通过时分秒来操作，不是那么的方便，我们可以使用时间戳来有效解决这个问题，将某个
+时间点转换为时间戳之后，直接通过数值计算就能很容易了。这些转换操作需要经常用到，我们直接新建一个utils包来管理这些常用的
+方法，并将它设计为静态方法。
