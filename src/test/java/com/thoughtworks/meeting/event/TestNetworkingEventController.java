@@ -1,4 +1,4 @@
-package com.thoughtworks.meeting;
+package com.thoughtworks.meeting.event;
 
 import com.thoughtworks.meeting.event.Controller;
 import com.thoughtworks.meeting.event.NetworkEventController;

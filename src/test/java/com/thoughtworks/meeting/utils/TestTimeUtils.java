@@ -1,4 +1,4 @@
-package com.thoughtworks.meeting;
+package com.thoughtworks.meeting.utils;
 
 import com.thoughtworks.meeting.utils.TimeUtils;
 import junit.framework.TestCase;

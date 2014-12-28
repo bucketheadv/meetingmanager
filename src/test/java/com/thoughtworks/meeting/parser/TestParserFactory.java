@@ -1,4 +1,4 @@
-package com.thoughtworks.meeting;
+package com.thoughtworks.meeting.parser;
 
 import com.thoughtworks.meeting.parser.Parser;
 import com.thoughtworks.meeting.parser.ParserFactory;

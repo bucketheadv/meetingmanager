@@ -1,4 +1,4 @@
-package com.thoughtworks.meeting;
+package com.thoughtworks.meeting.event;
 
 import com.thoughtworks.meeting.event.Event;
 import com.thoughtworks.meeting.event.EventGeneratorImpl;

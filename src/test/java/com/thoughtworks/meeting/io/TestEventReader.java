@@ -1,4 +1,4 @@
-package com.thoughtworks.meeting;
+package com.thoughtworks.meeting.io;
 
 import com.thoughtworks.meeting.io.EventReader;
 import junit.framework.TestCase;
