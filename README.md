@@ -13,7 +13,7 @@
 
 **项目的结构设计**
 
->项目名称为:meetingmanager,包名前缀为:com.thoughtworks.meeting,在此包目录下包含项目的运行入口程序**App.java**以及项目的配置文件**config.properties**和项目的输入文件**input.txt**,其他程序分别分散在各个包中，本实例中共包含**build**,**event**,**io**,**parser**,**utils**共5个包。**build**包中只有一个类文件，它负责整合项目的输入数据然后解析到生成结果和输出之间的调度；**event**包负责生成事件和生成结果；**io**包负责读取配置和输入数据；**parser**包负责解析输入数据然后调用**event**包生成事件；**utils**包负责一些公用的静态方法，比如时间函数和随机函数。
+>项目名称为:meetingmanager,包名前缀为:com.thoughtworks.meeting,在此包目录下包含项目的运行入口程序**App.java**;项目的配置文件**config.properties**和项目的输入文件**input.txt**在根目录**src**下,其他程序分别分散在各个包中，本实例中共包含**build**,**event**,**io**,**parser**,**utils**共5个包。**build**包中只有一个类文件，它负责整合项目的输入数据然后解析到生成结果和输出之间的调度；**event**包负责生成事件和生成结果；**io**包负责读取配置和输入数据；**parser**包负责解析输入数据然后调用**event**包生成事件；**utils**包负责一些公用的静态方法，比如时间函数和随机函数。
 
 ##**整体设计**##
 
